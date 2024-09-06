@@ -1,0 +1,87 @@
+{% extends "admin.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block content %}
+	
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <nav aria-label="breadcrumb" class="text-left">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="{% url 'profil_admin' %}"><h4>Halaman Beranda</h4></a></li>
+                  				<li class="breadcrumb-item active" aria-current="page"><h4>/{{judul}}</h4></li> 
+                        </nav>
+							<div class="product-category-page">
+								<div class="tab-content">
+									<!-- Products Grid -->
+									<div class="tab-pane active" id="products-grid">
+										<div class="products-block">
+											<div class="row mb-4">
+											<div class="card card-body">
+											
+											<table class="table table-bordered mt-3">
+											<thead>
+												<tr align="center">
+													<th>No</th>
+													<th>No Transaksi</th>
+													<th>Nama Customer</th>
+													<th>Tanggal Book</th>
+													<th>Jam Book</th>
+													<th>Status</th>
+													
+													<th>Aksi</th>
+												</tr>
+											</thead>
+											<tbody>
+											{% for row in data %}
+											<tr align="center">
+												<td>{{ forloop.counter }}</td>
+												<td>{{row.no_transaksi}}</td>
+												<td>
+												{{row.custumer.nama}}
+												</td>
+												<td>
+												{{row.tanggal_booking | date:"d M Y"}}
+												</td>
+												<td>
+												{{row.jam_booking}}
+												</td>
+												<td>
+												{{row.status}}
+												</td>
+												<td>
+												<a href="{% url 'detailpemesananambildilokasi_admin' row.no_transaksi  %}" class="btn btn-primary btn-sm">Detail</a>
+												
+												</td>
+											</tr>
+											{% empty %}
+											<tr>
+												
+												<td colspan="6" align="center">Data Pemesanan di Lokasi Kosong</td>
+											</tr>
+											{% endfor %}
+												
+												
+												
+											</tbody>
+											</table>
+													
+
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<script type="text/javascript" language="javascript">
+
+ </script>
+			
+			
+{% endblock content %}

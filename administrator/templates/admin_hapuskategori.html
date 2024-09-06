@@ -1,0 +1,48 @@
+{% extends "admin.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block content %}
+						
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <nav aria-label="breadcrumb" class="text-left">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="{% url 'profil_admin' %}"><h4>Halaman Beranda</h4></a></li>
+                  				<li class="breadcrumb-item active" aria-current="page"><h4>/{{judul}}</h4></li> 
+                        </nav>
+							<div class="product-category-page">
+								<div class="tab-content">
+									<!-- Products Grid -->
+									<div class="tab-pane active" id="products-grid">
+										<div class="products-block">
+											<div class="row mb-4">
+											<div class="contact-form form">
+											 <h4> Apakah Kategori tersebut mau dihapus <b>"{{hapus}}"</b> ?</h4>
+													 <form action="{% url 'deletekategori_admin' hapus.id %}" method="POST">
+                    									{% csrf_token %}    
+													<br>
+                   							 	
+													<div class="form-group text-center">
+															<input type="submit" class="btn btn-primary" value="HAPUS KATEGORI">
+															<a href="{% url 'kategori_admin'  %}" class="btn btn-primary btn-sm">BATAL</a>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<script type="text/javascript" language="javascript">
+
+ </script>
+			
+			
+{% endblock content %}

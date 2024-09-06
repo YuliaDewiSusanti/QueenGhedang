@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+			<!-- Main Content -->
+			
+			<div id="content" class="site-content">
+				<!-- Slideshow -->
+				<div class="two-columns ">
+					<div class="section slideshow">
+						<div class="container">
+							<div class="row ">
+								<div class="col-20p col-md-3 left-column">
+									<!-- Product - Category -->
+									<div class="section product-categories">
+										<div class="block-title">
+											<h2 class="title">Kategori</h2>
+										</div>
+								
+									<div class="block-content">	
+
+									{% for ktg in jumlahkategori  %}
+									<div class="item">
+										<a class="category-title" href="{% url 'kategori' ktg.slug %}">{{ktg.nama}} ({{ktg.product_count}})</a>
+									</div>
+									{% empty %}
+									<div>
+									<div class="alert alert-danger">Kategori Masih Kosong</div>
+									</div>
+									{% endfor %}
+									
+								</div>
+							</div>
+
+						</div>
+						<div class="tiva-slideshow-wrapper">
+							<div id="tiva-slideshow" class="nivoSlider">
+							 {% for slider in slide %}
+                                <a href="#">
+									<img class="img-responsive" src="{{slider.gambar_slide.url}}" alt="Slideshow Image">
+								</a>    
+                                    {% empty %}
+                                    <div>
+                                       <div class="alert alert-danger">Slide Masih Kosong</div>
+                                    </div>
+                                    {% endfor %}
+							
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="section banners">
+				<div class="container">
+					<div class="row margin-10">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-10">
+							<div class="banner-item effect">
+								<a href="#">
+									<img class="img-responsive" src="{% static 'public/img/banner/1.jpg' %}" alt="banner-1" title="banner-1">
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-10">
+							<div class="banner-item effect">
+								<a href="#">
+									<img class="img-responsive" src="{% static 'public/img/banner/2.jpg' %}" alt="banner-1" title="banner-1">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 2 Columns -->
+					<div class="container">
+						<div class="row ">
+							<!-- Right Column -->
+							<div class="col-md-12 right-column">
+								<!-- menu -->
+								<div class="section products-block category-tab">
+									<div class="block-title">
+										<h2 class="title">Menu</h2>
+									</div>
+									
+									<div class="block-content">
+										<!-- Tab Navigation -->
+										<div class="tab-nav">
+											<ul>
+												
+												
+											</ul>
+										</div>
+										
+										<!-- Tab Content -->
+										<div class="tab-content">
+											<!-- New Arrivals -->
+											<div role="tabpanel" class="tab-pane fade in active" id="new-arrivals">
+												<div class="products owl-theme owl-carousel">
+												{% for b in baru %}
+													<div class="product-item">
+														<div class="product-image">
+															<a href="{% url 'product' b.kategori.slug b.slug  %}">
+																<img src="{{b.gambar.url}}" alt="Product Image">
+															</a>
+														</div>
+														
+														<div class="product-title">
+															<a href="{% url 'product' b.kategori.slug b.slug  %}">
+																{{b.nama_produk}}
+															</a>
+														</div>
+														{% if b.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{b.harga|intcomma}}</span>
+															
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{b.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{b.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														
+														
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' b.kategori.slug b.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+															
+															<a class="quickview" href="{% url 'product' b.kategori.slug b.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+														</div>
+													</div>
+												{% empty %}
+												<div>
+													<div class="alert alert-danger">Produk Baru Masih Kosong</div>
+												</div>
+												{% endfor %}
+                                                
+
+												</div>
+											</div>
+											
+											<!-- Best Seller -->
+											<div role="tabpanel" class="tab-pane fade" id="new-seller">
+												<div class="products owl-theme owl-carousel">
+                                               
+													{% for laku  in terlaku %}
+													<div class="product-item">
+														<div class="product-image">
+															<a href="{% url 'product' laku.kategori.slug laku.slug  %}">
+																<img src="{{laku.gambar.url}}" alt="Product Image">
+															</a>
+														</div>
+														
+														<div class="product-title">
+															<a href="#">
+																{{laku.nama_produk}}
+															</a>
+														</div>
+														
+														{% if laku.diskon == 0 %}
+														<div class="product-price">
+															<br/>
+															<span class="">Rp. {{laku.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{laku.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{laku.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' laku.kategori.slug laku.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+															<a class="quickview" href="{% url 'product' laku.kategori.slug laku.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+														</div>
+													</div>
+												{% empty %}
+										<div>
+                                       		<div class="alert alert-danger">Produk Terlaku Masih Kosong</div>
+                                    	</div>
+												{% endfor %}
+                                               
+											
+												</div>
+											</div>
+											
+											
+										
+										</div>
+									</div>
+								</div>
+								<!-- makanan/minuman -->
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-column">
+										<div class="section products-block category-double">
+											<div class="block-title padding left-10">
+												<h2 class="title">Makanan</h2>
+											</div>
+											
+											<div class="block-content">
+												<div class="products owl-theme owl-carousel">
+													
+													
+													{% for mkn in makanan  %}
+												<div class="product-item">
+														<div class="product-image">
+															<a href="#">
+																<img src="{{mkn.gambar.url}}" alt="Product Image">
+															</a>
+														</div>
+														
+													<div class="product-title">
+															<a href="#">
+																{{mkn.nama_produk}}
+															</a>
+														</div>
+														
+														
+														
+														{% if mkn.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{mkn.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{mkn.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{mkn.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' mkn.kategori.slug mkn.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+
+															<a class="quickview" href="{% url 'product' mkn.kategori.slug mkn.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+														</div>
+													</div>
+												{% empty %}
+												<div>
+													<div class="alert alert-danger">Produk Makanan Masih Kosong</div>
+												</div>
+												{% endfor %}
+													
+												
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-column">
+										<div class="section products-block category-double">
+											<div class="block-title">
+												<h2 class="title">Minuman</h2>
+											</div>
+											
+											<div class="block-content">
+												
+												<div class="products owl-theme owl-carousel">
+													
+													
+													{% for min in minuman  %}
+												<div class="product-item">
+														<div class="product-image">
+															<a href="#">
+																<img src="{{min.gambar.url}}" alt="Product Image">
+															</a>
+														</div>
+														
+													<div class="product-title">
+															<a href="#">
+																{{min.nama_produk}}
+															</a>
+														</div>
+														
+														
+														
+														{% if min.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{min.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{min.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{min.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' min.kategori.slug min.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+															<a class="quickview" href="{% url 'product' min.kategori.slug min.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+															
+														</div>
+													</div>
+												{% empty %}
+												<div>
+													<div class="alert alert-danger">Produk Minuman Masih Kosong</div>
+												</div>
+												{% endfor %}
+													
+												
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Aneka makanan -->
+								<div class="section products-block new-arrivals layout-3 right-column">
+									<div class="block-title">
+										<h2 class="title">Aneka Menu</h2>
+									</div>
+									<div class="block-content">
+										<div class="products owl-theme owl-carousel">
+											<div class="item">
+											{% for pro in product %}
+											<div class="product-item">
+													<div class="product-image">
+														<a href="{% url 'product' pro.kategori.slug pro.slug  %}">
+															<img src="{{pro.gambar.url}}" alt="Product Image">
+														</a>
+													</div>
+													
+													<div class="product-info">
+														<div class="product-title">
+															<a href="#">
+																{{pro.nama_produk}}
+															</a>
+														</div>
+														
+														
+														
+													{% if pro.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{pro.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{pro.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{pro.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' pro.kategori.slug pro.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+															<a class="quickview" href="{% url 'product' pro.kategori.slug pro.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											{% empty %}
+												<div>
+													<div class="alert alert-danger">Produk  Masih Kosong</div>
+												</div>
+											{% endfor %}
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				
+{% endblock content %}

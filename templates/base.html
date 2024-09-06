@@ -1,0 +1,369 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Queen Ghedang | Halaman {{judul}}</title>
+    
+    <meta name="keywords" content="Rumah makan Queen Ghedang">
+    <meta name="description" content="Rumah makan Queen Ghedang">
+    <meta name="author" content="bj">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'public/img/queen3.png' %}" type="image/png">
+    
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:300,400,700" rel="stylesheet">
+    
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'public/libs/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/font-material/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/nivo-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/owl.carousel/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'public/libs/slider-range/css/jslider.css' %}">
+    
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'public/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'public/css/reponsive.css' %}">
+    
+    <!-- jQuery -->
+    <script src="{% static 'public/libs/jquery/jquery.js' %}"></script>
+    
+    <!-- SweetAlert -->
+    <script src="{% static 'public/sweetalert.min.js' %}"></script>
+</head>
+<style>
+    ul {list-style: none;}
+    .alert-success, .alert-warning, .alert-danger, .alert-info{
+        background-repeat: no-repeat ;
+        background-position: 10px center;
+        height: 40px;
+        text-transform: uppercase;
+        font-size: 12px;
+        line-height: 22px;
+        margin-bottom: 20px;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+    
+}
+
+    .alert-danger {
+        background-color: #FFFBCC;
+        border: 1px solid #FFF35E;
+        color: #C69E00;
+        background-image: url({% static 'public/img/menu/error.png' %});
+    }
+    .alert-success{
+        background-color: #EBF8D6;
+        border: 1px solid #A6DD88;
+        color: #539B2D;
+        background-image: url({% static 'public/img/menu/check.png' %});
+ 
+}
+    </style>
+	<body class="home home-2">
+		<div id="all">
+				<!-- Header -->
+				<header >
+					<!-- Topbar -->
+					<div class="topbar">
+						<div class="container topbar-content">
+							<div class="row">
+								<!-- Topbar Left -->
+								<div class="col-md-7 col-sm-7 col-xs-12">
+									<div class="topbar-left d-flex">
+										<div class="email">
+											<li><span>Email: </span><a href="#">{{statis.email}}</a></li>
+										</div>
+										<div class="skype">
+											<li><span>Telpon: </span><a href="#">{{statis.telpon}}</a></li>
+										</div>
+									</div>
+								</div>
+								
+								<!-- Topbar Right -->
+								<div class="col-md-5 col-sm-5 col-xs-12">
+									<div class="topbar-right d-flex justify-content-end">
+										<!-- My Account -->
+										<div class="dropdown account">
+											<div class="dropdown-toggle" data-toggle="dropdown">
+											{% if user.is_authenticated %}
+											Hai, <b> {{ request.user }}</b>
+											{% else %}
+											Registrasi Akun
+											{% endif %}
+											
+											</div>
+											<div class="dropdown-menu">									
+											{% if user.is_authenticated %}
+												<div class="item">
+													<a href="{% url 'logoutpage' %}" title="LogOut Account"><i class="fa fa-sign-out"></i>LogOut</a>
+												</div>
+											{% else %}
+												<div class="item">
+													<a href="{% url 'loginpage' %}" title="Log in to your customer account"><i class="fa fa-sign-in"></i>Login</a>
+												</div>
+
+												<div class="item">
+													<a href="{% url 'register' %}" title="Register Account"><i class="fa fa-user"></i>Register</a>
+												</div>
+											{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- Header Top -->
+					<div class="header-top">
+						<div class="container">
+							<div class="row margin-0">
+								<div class="col-lg-2 col-md-2 col-sm-12 padding-0">
+									<!-- Logo -->
+									<div class="logo">
+										<a href="#">
+											<img class="img-responsive" src="{% static 'public/img/logo12.png' %}" alt="Logo">
+										</a>
+									</div>
+									
+									<span id="toggle-mobile-menu"><i class="zmdi zmdi-menu"></i></span>
+								</div>
+								
+								<div class="col-lg-7 col-md-7 col-sm-12 padding-0">
+									<!-- Main Menu -->
+									<div id="main-menu">
+									{% include "navbar.html" %}
+									</div>
+								</div>
+								
+								<div class="col-lg-3 col-md-3 col-sm-12 padding-0">
+									<!-- Cart -->
+									{% with totail_items=keranjang|length %}
+									<div class="block-cart dropdown">
+										<div class="cart-title">
+											<i class="fa fa-shopping-basket"></i>
+											{% if keranjang|length > 0 %}
+											<span class="cart-count">{{ totail_items }}</span>
+											{% else %}
+											<span class="cart-count">0</span>
+											{% endif %}
+										</div>
+										
+										<div class="dropdown-content">
+											<div class="cart-content">
+												<table>
+													<tbody>
+													{% for item in keranjang %}
+													{% with product=item.product  %}
+													<tr>
+														<td class="product-image">
+															<a href="product-detail-left-sidebar.html">
+																<img src="{{product.gambar.url}}" alt="{{product.nama_produk}}">
+															</a>
+														</td>
+														<td>
+															<div class="product-name">
+																<a href="product-detail-left-sidebar.html">{{product.nama_produk}}</a>
+															</div>
+															<div>	
+																{{item.quantity}} x <span class="product-price">Rp {{ item.price|intcomma }} = <b>Rp. {{ item.total_price|intcomma }}</b></span>
+															</div>
+														</td>
+														<td class="action">
+															<a class="remove" href="{% url "cart_remove" product.id %}">
+																<i class="fa fa-trash-o" aria-hidden="true"></i>
+															</a>
+														</td>
+													</tr>
+														
+													{% endwith %}
+													{% empty %}
+													<tr><td>Belum ada Pesanan</td></tr>
+													{% endfor %}
+														<tr class="total">
+															<td>Total:</td>
+															<td colspan="2">Rp. {{ keranjang.get_total_price|intcomma }}</td>
+														</tr>
+													
+														<tr>
+															<td colspan="3">
+																<div class="cart-button">
+																	<a class="btn btn-primary" href="{% url 'cart_detail' %}" title="View Cart">Lihat Cart</a>
+																		{% with totail_items=keranjang|length %}
+																
+																		{% if keranjang|length > 0 %}
+																		<a class="btn btn-primary" href="{% url 'checkout' %}" title="Checkout">Checkout/Selesai</a>
+																		{% else %}
+																		<a class="btn" href="{% url 'beranda' %}" title="Belanja Dulu">Belanja Dulu</a>
+																		{% endif %}
+																	
+																		{% endwith %}						
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									{% endwith %}
+									<!-- Search -->
+									<div class="form-search">
+										<form action="{% url 'cari' %}" method="GET">
+											<input type="text"  name="kata" class="form-input" placeholder="Kata produk">
+											<button type="submit" class="fa fa-search"></button>
+										</form>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+					<hr>
+				</header>
+			{% block content %}
+			
+			{% endblock content %}
+			
+			<!-- Footer -->
+			</br>
+			<footer id="footer">
+				<div class="footer">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 footer-col">
+								<div class="block text">
+									<div class="block-content">
+										<a href="" class="logo-footer">
+											<img src="{% static 'public/img/queen3.png' %}" alt="Logo" width="200">
+										</a>
+										
+										<p>
+											Store Queen Ghedang ini adalah toko yang menjual makanan dan minuman dengan bahan olahan pisang
+										</p>
+									</div>
+								</div>
+								
+								<div class="block social">
+									<div class="block-content">
+										<ul>
+											<li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-dribbble"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 footer-col">
+								<div class="block menu">
+									<h2 class="block-title">Kategori Menu</h2>
+									
+									<div class="block-content">
+										<ul>
+										{% for kt in kategori %}
+                                                       <li>
+														
+														<a href="{% url 'kategori' kt.slug %}" title="{{kt.nama}}">{{kt.nama}}</a>
+													</li>
+                                                    {% empty %}
+                                                        <div class="alert alert-danger">Kategori Kosong</div>
+                                                    {% endfor %}
+										</ul>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 footer-col">
+								<div class="block text">
+									<h2 class="block-title">Kontak Kita</h2>
+									
+									<div class="block-content">
+										<div class="contact">
+											<div class="item d-flex">
+												<div>
+													<i class="zmdi zmdi-home"></i>
+												</div>
+												<div>
+													<span>JL. Pakuniran Desa Bucor Kulon</span>
+												</div>
+											</div>
+											<div class="item d-flex">
+												<div>
+													<i class="zmdi zmdi-phone-in-talk"></i>
+												</div>
+												<div>
+													<span>085231991163</span>
+												</div>
+											</div>
+											<div class="item d-flex">
+												<div>
+													<i class="zmdi zmdi-email"></i>
+												</div>
+												<div>
+													<span><a href="mailto:support@domain.com">yulia@gmail.com</a></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>				
+				</div>
+				
+				<!-- Copyright -->
+				<div class="footer-copyright text-center">
+					<div class="container"></div>
+				</div>
+			</footer>
+
+			<!-- Go Up button -->
+			<div class="go-up">
+				<a href="#">
+					<i class="fa fa-long-arrow-up"></i>
+				</a>
+			</div>
+			
+			<!-- Page Loader -->
+			<div id="page-preloader">
+				<div class="page-loading">
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Vendor JS -->
+		<script src="{% static 'public/libs/bootstrap/js/bootstrap.js' %}"></script>
+		<script src="{% static 'public/libs/jquery.countdown/jquery.countdown.js' %}"></script>
+		<script src="{% static 'public/libs/nivo-slider/js/jquery.nivo.slider.js' %}"></script>
+		<script src="{% static 'public/libs/owl.carousel/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/tmpl.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/jquery.dependClass-0.1.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/draggable-0.1.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/jquery.slider.js' %}"></script>
+		<script src="{% static 'public/libs/elevatezoom/jquery.elevatezoom.js' %}"></script>
+		
+		<!-- Template CSS -->
+		<script src="{% static 'public/js/main.js' %}"></script>
+	</body>
+
+</html>

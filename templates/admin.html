@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+		<!-- Basic Page Needs -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Queen Ghedang | Halaman {{judul}}</title>
+		
+		<meta name="keywords" content="Rumah makanQueen Ghedang">
+		<meta name="description" content="Rumah makanQueen Ghedang">
+		<meta name="author" content="bj">
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="{% static 'public/img/queen3.png' %}" type="image/png">
+		
+		<!-- Mobile Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Playfair+Display:300,400,700" rel="stylesheet">
+		
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="{% static 'public/libs/bootstrap/css/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/font-awesome/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/font-material/css/material-design-iconic-font.min.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/nivo-slider.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/animate.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/nivo-slider/css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/owl.carousel/assets/owl.carousel.min.css' %}">
+		<link rel="stylesheet" href="{% static 'public/libs/slider-range/css/jslider.css' %}">
+		<script src="{% static 'public/libs/jquery/jquery.js' %}"></script>
+		<script src="{% static 'public/sweetalert.min.js' %}"></script>
+		<!-- Template CSS -->
+		<link rel="stylesheet" href="{% static 'public/css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'public/css/reponsive.css' %}">
+	</head>
+	
+	<body class="home home-1">
+		<div id="all">
+			<br/>
+				<div class="container">
+					<div class="row">
+						<!-- Sidebar -->
+						<div id="left-column" class="sidebar col-lg-3 col-md-3 col-sm-3 col-xs-12">
+							<!-- Block - Product Categories -->
+							<div class="block product-categories">
+								<h3 class="block-title">MENU Administrator</h3>
+								
+								<div class="block-content">
+								
+									<div class="item "> 
+										<a class="category-title " href="{% url 'beranda' %}">Beranda</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'profil_admin' %}">Profil</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'custumer_admin' %}">Customer</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'kategori_admin' %}">Kategori</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'product_admin' %}">Product</a>
+									</div>
+										<div class="item">
+										<span class="arrow collapsed" data-toggle="collapse" data-target="#transaksi" aria-expanded="false" role="button">
+											<i class="zmdi zmdi-minus"></i>
+											<i class="zmdi zmdi-plus"></i>
+										</span>
+										
+										<a class="category-title" href="">Transaksi</a>
+										<div class="sub-category collapse" id="transaksi" aria-expanded="true" role="main">
+											<div class="item">
+												<a href="{% url 'pemesananambildilokasi_admin' %}">Ambil Di Tempat</a>
+											</div>
+											<div class="item">
+												<a href="{% url 'pemesanandiantar_admin' %}">Antar Ke Lokasi</a>
+											</div>
+											<div class="item">
+												<a href="{% url 'trackingpemesanandiantar_admin' %}">Tracking </a>
+											</div>
+										</div>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'slide_admin' %}">Slide</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'kontak_admin' %}">Data Kontak</a>
+									</div>
+									<div class="item">
+										<a class="category-title" href="{% url 'logoutpage' %}">Log Out</a>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+		{% block content %}
+            
+        {% endblock content %}		
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="footer">
+					<!-- Footer Top -->
+					<div class="footer-top">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+									<div class="block text">
+										<span>Copyright @Queen Ghedang Administrator</span>
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+					</div>
+					
+					<!-- Footer Bottom -->
+					
+				</div>
+				
+				<!-- Copyright -->
+				
+			</footer>
+			
+			<!-- Go Up button -->
+			<div class="go-up">
+				<a href="#">
+					<i class="fa fa-long-arrow-up"></i>
+				</a>
+			</div>
+			
+			<!-- Page Loader -->
+			<div id="page-preloader">
+				<div class="page-loading">
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+				</div>
+			</div>
+		</div>
+		<!-- Vendor JS -->
+		
+		<script src="{% static 'public/libs/bootstrap/js/bootstrap.js' %}"></script>
+		<script src="{% static 'public/libs/jquery.countdown/jquery.countdown.js' %}"></script>
+		<script src="{% static 'public/libs/nivo-slider/js/jquery.nivo.slider.js' %}"></script>
+		<script src="{% static 'public/libs/owl.carousel/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/tmpl.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/jquery.dependClass-0.1.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/draggable-0.1.js' %}"></script>
+		<script src="{% static 'public/libs/slider-range/js/jquery.slider.js' %}"></script>
+		<script src="{% static 'public/libs/elevatezoom/jquery.elevatezoom.js' %}"></script>
+		
+		<!-- Template CSS -->
+		<script src="{% static 'public/js/main.js' %}"></script>
+	</body>
+
+</html>

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div id="content" class="site-content">
+				<!-- Breadcrumb -->
+				<div class="container">
+					<div class="contact-page">
+						<div class="checkout-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="panel-group" id="accordion">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												
+													Tracking Data Pengiriman
+												</a>
+											</h4>
+										</div>
+										<div>
+											<div class="panel-body">
+												<table class="cart-summary table table-bordered">
+													<thead>
+														<tr>
+															 <th class=" text-center">No</th>
+                                                            <th class=" text-center">No Transaksi</th>
+                                                            <th class=" text-center">No Whatsapp</th>
+                                                            <th class=" text-center">Alamat Pengiriman</th>
+                                                            <th class=" text-center">Status</th>
+                                                           
+                                                            <th class=" text-center">Detail</th>
+                                                           
+														</tr>
+													</thead>
+													
+													<tbody>
+													{% for r in lokasi %}
+													<tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td class="text-center">{{r.no_transaksi}}</td>
+                                                        <td class="text-center">
+														{% if r.wa_kirim %}
+															{{r.wa_kirim}}
+														{% else %}
+															{{request.user.custumer.wa}}
+														{% endif %}
+														</td>
+                                                        <td class="text-center">
+														{% if r.alamat_kirim %}
+															{{r.alamat_kirim}}
+														{% else %}
+															{{request.user.custumer.alamat}}
+														{% endif %}
+														</td>
+                                                        <td class="text-center">{{r.status}}</td>
+                                                      {% if r.status == "Pengiriman" %}
+													  <td class="text-center">
+														<a href="{% url 'trackingantar' r.no_transaksi %}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i>Tracking</a>
+														</td>
+													  {% else %}
+													  <td class="text-center">
+														<a href="" class="btn btn-danger btn-sm disabled"> <i class="fa fa-times"></i> Tracking</a>
+														</td>
+													  {% endif %}
+                                                         
+                                                  
+                                                    </tr>
+													{% empty %}
+													<tr>
+                                                        <td class="text-center" colspan="6">Belum Ada Transaksi Antar ke lokasi</td>
+                                                        
+                                                    </tr>
+													{% endfor %}
+                                                    
+                                                
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+				<!-- Intro -->
+			
+{% endblock content %}

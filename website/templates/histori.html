@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div id="content" class="site-content">
+				<!-- Breadcrumb -->
+
+				<div class="container">
+					<div class="page-checkout">
+						<div class="row">
+						<br/>
+								 {% if messages %}
+                                    <ul>
+                                    {% for message in messages  %}
+                                        <li class="{{message.tags}}">{{ message }}</li>
+                                       
+                                    {% endfor %}
+                                    </ul> 
+                                {% endif %}
+            <div class="col-md-12 left-column">
+								<!-- Product - Category Tab -->
+								<div class="section products-block category-tab">
+									
+									
+									<div class="block-content">
+										<!-- Tab Navigation -->
+										<div class="tab-nav">
+											<ul>
+												<li class="active">
+													<a data-toggle="tab" href="#ditempat">
+														<span>Ambil di Tempat</span>
+													</a>
+												</li>
+												<li>
+													<a data-toggle="tab" href="#diantar">
+														<span>Antar ke Lokasi</span>
+													</a>
+												</li>
+												
+											</ul>
+										</div>
+										
+										<!-- Tab Content -->
+										<div class="tab-content">
+											<!-- tempat -->
+											<div role="tabpanel" class="tab-pane fade in active" id="ditempat">
+											
+							<div class="checkout-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="panel-group" id="accordion">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												
+													Histori Pemesanan Booking Tempat
+												</a>
+											</h4>
+										</div>
+										<div>
+											<div class="panel-body">
+												<table class="cart-summary table table-bordered">
+													<thead>
+														<tr>
+															<th class=" text-center">No</th>
+                                                            <th class=" text-center">No Transaksi</th>
+															<th class=" text-center">Status Pembelian</th>
+                                                            <th class=" text-center">Total Pembelian</th>
+															<th class=" text-center">aksi</th>
+                                                           
+														</tr>
+													</thead>
+													
+													<tbody>
+													{% for row in tempat %}
+													<tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td class="text-center">{{row.no_transaksi}}</td>
+                                                        <td class="text-center">{{row.status}}</td>
+														<td>Rp. {{ row.total_transaksi | intcomma }}</td>
+														<td>
+														{% if row.status == "Lunas" %}
+														<button class="btn btn-danger detail-btn" disabled>Lunas</button>
+														{% else %}
+														<a href="{% url 'isivitual' row.no_transaksi %}" class="btn btn-primary detail-btn" data-notransaksi="{{ row.no_transaksi }}">Bayar</a>
+														{% endif %}
+														</td>
+														
+                                                    </tr>
+													{% empty %}
+													<tr>
+                                                        <td class="text-center" colspan="5">Belum Ada Transaksi Booking ditempat</td>
+                                                        
+                                                    </tr>
+													{% endfor %}
+                                                    
+                                                
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+                                            
+											</div>
+											
+											<!-- antar -->
+											<div role="tabpanel" class="tab-pane fade" id="diantar">
+												
+                                                			
+							<div class="checkout-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="panel-group" id="accordion">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												
+													Histori Pemesanan Booking Lokasi
+												</a>
+											</h4>
+										</div>
+										<div>
+											<div class="panel-body">
+												<table class="cart-summary table table-bordered">
+													<thead>
+														<tr>
+															 <th class=" text-center">No</th>
+                                                            <th class=" text-center">No Transaksi</th>
+                                                            <th class=" text-center">No Whatsapp</th>
+                                                            <th class=" text-center">Alamat Pengiriman</th>
+                                                            <th class=" text-center">Status Pembelian</th>
+                                                            <th class=" text-center">Total Pembelian</th>
+															<th class=" text-center">aksi</th>
+                                                           
+														</tr>
+													</thead>
+													
+													<tbody>
+													{% for r in lokasi %}
+													<tr>
+                                                        <td class="text-center">{{ forloop.counter }}</td>
+                                                        <td class="text-center">{{r.no_transaksi}}</td>
+                                                        <td class="text-center">
+														{% if r.wa_kirim %}
+															{{r.wa_kirim}}
+														{% else %}
+															{{request.user.custumer.wa}}
+														{% endif %}
+														</td>
+                                                        <td class="text-center">
+														{% if r.alamat_kirim %}
+															{{r.alamat_kirim}}
+														{% else %}
+															{{request.user.custumer.alamat}}
+														{% endif %}
+														</td>
+                                                        <td class="text-center">{{r.status}}</td>
+														<td>Rp. {{ r.total_transaksi | intcomma }}</td>
+														</td>
+														<td>
+															{% if r.status == "Lunas" %}
+															<button class="btn btn-danger detail-btn" disabled>Lunas</button>
+															{% else %}
+															<a href="{% url 'isivitual' r.no_transaksi %}" class="btn btn-primary detail-btn" data-notransaksi="{{ r.no_transaksi }}">Bayar</a>
+															{% endif %}
+														  </td>
+                                                        
+                                                  
+                                                    </tr>
+													{% empty %}
+													<tr>
+                                                        <td class="text-center" colspan="6">Belum Ada Transaksi Booking ke lokasi</td>
+                                                        
+                                                    </tr>
+													{% endfor %}
+                                                    
+                                                
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+											</div>
+											
+											
+										</div>
+									</div>
+								</div>
+								
+							</div>
+<!-- Main Content -->
+				
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- Intro -->
+				
+<!-- Intro -->
+				
+			
+{% endblock content %}

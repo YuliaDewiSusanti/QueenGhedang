@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+			<!-- Main Content -->
+<div id="content" class="site-content">
+				<!-- Breadcrumb -->
+				<br/>
+
+			
+				<div class="container">
+					<div class="page-cart">
+						<div class="table-responsive">
+							<table class="cart-summary table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-20">&nbsp;</th>
+										<th class="width-80 text-center">Gambar</th>
+										<th>Nama Menu</th>
+										<th class="width-100 text-center">Harga</th>
+										<th class="width-100 text-center">Jumlah</th>
+										<th class="width-100 text-center">Total</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+                                  {% for item in cart %}
+                                    {% with product=item.product  %}
+									<tr>
+										<td class="product-remove">
+											<a title="Remove this item" class="remove" href="{% url "cart_remove" product.id %}">
+												<i class="fa fa-times"></i>
+											</a>
+										</td>
+										<td>
+											<a href="product-detail-left-sidebar.html">
+												<img width="80" class="img-responsive" src="{{product.gambar.url}}" alt="{{product.nama_produk}}">
+											</a>
+										</td>
+										<td>
+											<a href="product-detail-left-sidebar.html" class="product-name">{{product.nama_produk}}</a>
+										</td>
+										<td class="text-center">
+											Rp {{ item.price|intcomma }}
+										</td>
+										<td>
+                                         <form action="{% url "cart_add" product.id %}" method="post">
+											<div class="product-quantity">
+												<div class="qty">
+													<div class="input-group">
+														<input type="number" id="qty_input" data-min="1" name="quantity"  value="{{item.quantity}}">
+														
+													</div>
+                                                    <br/>
+                                                    {% csrf_token %}
+                                                        {{ item.update_quantity_form.quantity }}
+                                                        {{ item.update_quantity_form.update }}
+                                                        <input type="submit" value="Update" class="btn btn-primary">
+												</div>
+											</div>
+                                        </form>
+										</td>
+										<td class="text-center">
+											Rp. {{ item.total_price|intcomma }}
+										</td>
+									</tr>
+									{% endwith %}
+                                        {% empty %}
+                                            <tr><th colspan="6"> Belum ada Pemesanan</th></tr>
+                                        {% endfor %}
+									
+								</tbody>
+								
+								<tfoot>
+									<tr class="cart-total">
+										<td rowspan="2" colspan="3"></td>
+										
+									</tr>
+									
+									<tr class="cart-total">
+										<td colspan="2" class="total text-right">Total</td>
+										<td colspan="1" class="total text-center">Rp. {{ cart.get_total_price|intcomma }}</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						
+						<div class="checkout-btn">
+                        <a href="{% url 'beranda' %}" class="btn btn-primary pull-left" title="Lanjut Belanja">
+								<i class="fa fa-angle-left ml-xs"> </i>
+
+								<span> Lanjut Belanja</span>
+							</a>
+                            {% with totail_items=keranjang|length %}
+								
+										 {% if keranjang|length > 0 %}
+										<a href="{% url 'checkout' %}" class="btn btn-primary pull-right" title="Selesai/Checkout">
+                                            <span> Selesai/Checkout</span>
+                                            <i class="fa fa-angle-right ml-xs"></i>
+                                        </a>
+										{% endif %}
+									
+										{% endwith %}
+							
+						</div>
+					</div>
+				</div>
+			</div>
+<script>
+	$(document).ready(function(){
+    
+    $('.plus').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) + 1 );
+    	    });
+        $('.minus').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) - 1 );
+    	if ($('#qty_input').val() == 0) {
+			$('#qty_input').val(1);
+		}
+
+    	    });
+ });
+</script>
+			
+{% endblock content %}

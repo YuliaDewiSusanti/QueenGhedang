@@ -1,0 +1,61 @@
+{% extends "admin.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <nav aria-label="breadcrumb" class="text-left">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="{% url 'beranda_admin' %}"><h4>Halaman Beranda</h4></a></li>
+                            </ol>
+                        </nav>
+							<div class="product-category-page">
+								<div class="tab-content">
+									<!-- Products Grid -->
+									<div class="tab-pane active" id="products-grid">
+										<div class="products-block">
+											<div class="row">
+
+
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+													<div class="product-item mb-5">
+														<i class="zmdi zmdi-account" style="font-size: 50px;"></i>
+                                                        <h3 class="block-title ">Jumlah Customer({{jmlCustumer}})</h3>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+													<div class="product-item mb-5">
+														<i class="zmdi zmdi-card-sd" style="font-size: 50px;"></i>
+                                                        <h3 class="block-title ">Jumlah Kategori({{jmlKategori}})</h3>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+													<div class="product-item mb-5">
+														<i class="zmdi zmdi-drink" style="font-size: 50px;"></i>
+                                                        <h3 class="block-title ">Jumlah Minuman({{jmlprodukminuman}})</h3>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+													<div class="product-item mb-5">
+														<i class="zmdi zmdi-delicious" style="font-size: 50px;"></i>
+                                                        <h3 class="block-title ">Jumlah Makanan({{jmlprodukmakanan}})</h3>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+													<div class="product-item mb-5">
+														<i class="zmdi zmdi-slideshow" style="font-size: 50px;"></i>
+                                                        <h3 class="block-title ">Jumlah Slide({{jmlSlide}})</h3>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+{% endblock content %}

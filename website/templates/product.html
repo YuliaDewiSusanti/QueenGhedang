@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %} 
+
+            <!-- Main Content -->
+            <div id="content" class="site-content">
+                	<!-- Breadcrumb -->
+					<div id="breadcrumb">
+						<div class="container">
+						
+							<h2 class="title">{{produk.nama_produk}}</h2>
+							
+							<ul class="breadcrumb">
+								<li><a href="{% url 'beranda' %}" title="Beranda">Beranda</a></li>
+								<li><a href="{% url 'kategori' produk.kategori.slug %}" title="">Kategori : {{produk.kategori.nama}}</a></li>
+								
+							</ul>
+						</div>
+					</div>
+
+                    <div class="container">
+                        <div class="product-detail">
+                            <div class="products-block layout-5">
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        {{produk.nama_produk}}
+                                    </div>
+                                                
+                                    <div class="row">
+                                        <div class="product-left col-md-5 col-sm-5 col-xs-12">
+                                            <div class="product-image vertical">
+                                                <div class="main-image">
+                                                    <img class="img-responsive" src="{{produk.gambar.url}}" alt="{{produk.nama_produk}}">
+                                                </div>
+                                                <div class="thumb-images">
+                                                {% if produk.gambar_satu %}
+                                                    <img class="img-responsive" src="{{produk.gambar_satu.url}}" alt="{{produk.nama_produk}}">
+                                                {% endif %}
+                                                {% if produk.gambar_dua %}
+                                                    <img class="img-responsive" src="{{produk.gambar_dua.url}}" alt="{{produk.nama_produk}}">
+                                                {% endif %}
+                                                {% if produk.gambar_tiga %}
+                                                    <img class="img-responsive" src="{{produk.gambar_tiga.url}}" alt="{{produk.nama_produk}}">
+                                                {% endif %}
+                                                {% if produk.gambar_empat %}
+                                                    <img class="img-responsive" src="{{produk.gambar_empat.url}}" alt="{{produk.nama_produk}}">
+                                                {% endif %}
+                                                
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="product-right col-md-7 col-sm-7 col-xs-12">
+                                            <div class="product-info">
+                                                            {% if produk.diskon == 0 %}
+                                                            <div class="product-price">
+                                                                <span class="">Rp. {{produk.harga|intcomma}}</span>
+                                                                <br/>
+                                                            </div>
+                                                            {% else %}
+                                                            <div class="product-price">
+                                                                <span class="sale-price">Rp. {{produk.setela_diskon|intcomma}}</span>
+                                                                <span class="base-price">Rp. {{produk.harga|intcomma}}</span>
+                                                            </div>
+                                                            {% endif %}
+                                                            <span class="float-right">
+                                                                <span class="availb ">Ketersediaan: </span>
+                                                                <span class="check">
+                                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>STOCK : {{produk.stock}}</span>
+                                                            </span>
+                                                
+                                            
+                                                <br/>
+                                                <div class="product-short-description">
+                                                    {{produk.keterangan|safe}} 
+    
+                                                </div>
+                                                
+                                                <br/>
+                                        <form action="{% url "cart_add" produk.id %}" method="post" class="cart-quantity">
+                                          {% csrf_token %}
+                                                <div class="product-add-to-cart border-bottom">
+                                                    <div class="product-quantity">
+                                                        <span class="control-label">QTY :</span>
+                                                        <div class="qty">
+                                                            <div class="input-group">
+                                                                <input type="text" name="quantity" id="number-input" value="1" class="input-group">
+                                                                <input type="hidden" name="stock" id="stock" value="{{produk.stock}}" class="input-group">
+                                                                <span class="adjust-qty">
+                                                                    <button class="adjust-btn plus" id="plus-btn" type="button">+</span>
+                                                                    </button>
+                                                                    <button class="adjust-btn minus" id="minus-btn" type="button">-</span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{ cart_product_form }}
+                                                    <div class="product-buttons">
+                                                        
+                                                        <button type="submit" class="btn btn-primary" aria-label="Left Align">
+                                                        <span class="fa fa-shopping-basket" aria-hidden="true"> Tambah Ke Cart</span>
+                                                        </button>
+                                                    </div>
+                                                </div> 
+                                             </form>	
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="products-block related-products item-4">
+                            <div class="block-title">
+                                <h5 class="title">{{jml}} <span>Menu yang sejenis</span></h5>
+                            </div>
+                            
+                            <div class="block-content">
+                                <div class="products owl-theme owl-carousel">
+    
+                                    
+                                    {% comment %}  {% endcomment %}
+                                    {% for row in related %}
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <a href="#">
+                                                <img src="{{row.gambar.url}}" alt="{{row.nama_produk}}">
+                                            </a>
+                                            
+                                        </div>
+                                        
+                                        <div class="product-title">
+                                            <a href="{% url 'product' row.kategori.slug row.slug  %}">
+                                                {{row.nama_produk}}
+                                            </a>
+                                        </div>
+                                            {% if row.diskon == 0 %}
+                                            <div class="product-price">
+                                            <br/>
+                                                <span class="">Rp. {{row.harga|intcomma}}</span>
+                                                                
+                                            </div>
+                                            {% else %}
+                                            <div class="product-price">
+                                                <span class="sale-price">Rp. {{row.setela_diskon|intcomma}}</span><br/>
+                                                <span class="base-price">Rp. {{row.harga|intcomma}}</span>
+                                            </div>
+                                            {% endif %}
+                                        
+                                            <div class="product-buttons">
+                                                <a class="add-to-cart" href="{% url 'product' row.kategori.slug row.slug  %}">
+                                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                                </a>
+    
+                                                <a class="quickview" href="{% url 'product' row.kategori.slug row.slug  %}">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                    </div>
+                                    {% empty %}
+                                    <div>
+                                           <div class="alert alert-danger">Kategori Masih Kosong</div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+<script>
+	$(document).ready(function() {
+		// Tombol Plus
+		$("#plus-btn").on("click", function() {
+		  var value = parseInt($("#number-input").val());
+		  var stok = parseInt($("#stock").val());
+		  if (value < stok) {
+			  $("#number-input").val(value + 1);
+			} else {
+			 
+			  swal({
+				  title: "Oops,...",
+				  text: "Stok tidak mencukupi.",
+				  icon: "error",
+				});
+			}
+		});
+  
+		// Tombol Minus
+		$("#minus-btn").on("click", function() {
+		  var value = parseInt($("#number-input").val());
+		  if (value > 0) {
+			$("#number-input").val(value - 1);
+		  }
+		});
+	});
+</script>
+
+{% endblock content %}

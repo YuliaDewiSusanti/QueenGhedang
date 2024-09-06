@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+			<!-- Main Content -->
+<div id="content" class="site-content">
+				<div class="container">
+					<div class="row">
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-12 col-md-12">
+							<div class="product-category-page">
+								<!-- Nav Bar -->
+								<div class="products-bar">
+									<div class="row">
+										<div class="col-md-6 col-xs-6">
+											<div class="gridlist-toggle" role="tablist">
+												<ul class="nav nav-tabs">
+													<li class="active"><a href="#products-grid" data-toggle="tab" aria-expanded="true"><i class="fa fa-th-large"></i></a></li>
+													<li><a href="#products-list" data-toggle="tab" aria-expanded="false"><i class="fa fa-bars"></i></a></li>
+												</ul>
+											</div>
+											
+											<div class="total-products">Terdapat {{jmlproduk}} Menu Kategori {{detailkategori.nama}}</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="tab-content">
+									<!-- Products Grid -->
+									<div class="tab-pane active" id="products-grid">
+										<div class="products-block">
+											<div class="row">
+											{% comment %}  {% endcomment %}
+											{% for ktg in produk.object_list %}
+											<div class="col-md-3 col-sm-4 col-xs-12">
+													<div class="product-item">
+														<div class="product-image">
+															<a href="">
+																<img class="img-responsive" src="{{ktg.gambar.url}}" alt="{{ktg.nama_produk}}">
+															</a>
+														</div>
+														
+														<div class="product-title">
+															<a href="{% url 'product' ktg.kategori.slug ktg.slug  %}">
+																{{ktg.nama_produk}}
+															</a>
+														</div>
+
+														{% if ktg.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{ktg.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{ktg.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{ktg.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+														
+														<div class="product-buttons">
+															<a class="add-to-cart" href="{% url 'product' ktg.kategori.slug ktg.slug  %}">
+																<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+															</a>
+															<a class="quickview" href="{% url 'product' ktg.kategori.slug ktg.slug  %}">
+																<i class="fa fa-eye" aria-hidden="true"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											{% empty %}
+											<div class="col-lg-12 col-md-12 col-sm-12 mt-40">
+                                                    <div class="alert alert-danger">Kategori {{detailkategori.nama}} Kosong</div>
+                                                </div>
+											{% endfor %}
+												
+											{% comment %}  {% endcomment %}
+											</div>
+										</div>
+									</div>
+									
+									<!-- Products List -->
+									<div class="tab-pane" id="products-list">
+										<div class="products-block layout-5">
+											{% comment %}  {% endcomment %}
+											{% for ktg in produk.object_list %}
+											<div class="product-item">
+												<div class="row">
+													<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+														<div class="product-image">
+															<a href="">
+															<img class="img-responsive" src="{{ktg.gambar.url}}" alt="{{ktg.nama_produk}}">
+															</a>
+														</div>
+													</div>
+													
+													<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+														<div class="product-info">
+															<div class="product-title">
+															<a href="{% url 'product' ktg.kategori.slug ktg.slug  %}">
+																{{ktg.nama_produk}}
+															</a>
+														</div>	
+													{% if ktg.diskon == 0 %}
+														<div class="product-price">
+														<br/>
+															<span class="">Rp. {{ktg.harga|intcomma}}</span>
+															<br/>
+														</div>
+														{% else %}
+														<div class="product-price">
+															<span class="sale-price">Rp. {{ktg.setela_diskon|intcomma}}</span><br/>
+															<span class="base-price">Rp. {{ktg.harga|intcomma}}</span>
+														</div>
+														{% endif %}
+															
+															<div class="product-description">
+																{{ktg.keterangan|safe}} 
+															</div>
+															
+															<div class="product-buttons">
+																<a class="add-to-cart" href="{% url 'product' ktg.kategori.slug ktg.slug  %}">
+																	<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+																	<span>Tambah Ke Cart</span>
+																</a>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											{% empty %}
+											<div class="col-lg-12 col-md-12 col-sm-12 mt-40">
+                                                    <div class="alert alert-danger">Kategori {{detailkategori.nama}} Kosong</div>
+                                                </div>
+											{% endfor %}
+											
+											{% comment %}  {% endcomment %}
+										</div>
+									</div>
+								</div>
+								
+								<!-- Pagination Bar -->
+								<div class="pagination-bar">
+									<div class="row">
+										
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="pagination">
+												<ul class="page-list">
+													
+
+												<li class="{% if not previous %} disabled {% endif %}">
+                                                    <a class="prev" href="{{ previous }}">Previous</a>
+                                                </li>
+
+													
+
+													 {% for n in produk.paginator.page_range  %}
+                                                        {% if produk.number == n  %}
+                                                                <li><a href="#" class="current">{{ n }}</a></li>
+                                                        {% elif n > produk.number|add:-3 and n < produk.number|add:3 %}
+                                                                <li><a href="?halaman={{ n }}">{{ n }}</a></li>
+                                                        {% endif %}
+                                                    {% endfor %}
+
+												
+													 <li class="{% if not next %} disabled {% endif %}">
+                                                        <a class="next" href="{{ next }}">Next </a> 
+														
+                                                    </li>
+
+
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+				<!-- Intro -->
+				
+			
+{% endblock content %}

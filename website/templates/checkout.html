@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<!-- Main Content -->
+<div id="content" class="site-content">
+				<!-- Breadcrumb -->
+				<div class="container">
+					<div class="page-checkout">
+                    <form action="{% url 'checkout' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+						<div class="row">
+						<br/>
+								 {% if messages %}
+                                    <ul>
+                                    {% for message in messages  %}
+                                        <li class="{{message.tags}}">{{ message }}</li>
+                                       
+                                    {% endfor %}
+                                    </ul> 
+                                {% endif %}
+							<div class="checkout-left col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<h4 class="title">Total Harga</h4>
+								<table class="table cart-total">
+									<tbody>
+										<tr class="cart-subtotal">
+											<th>
+												<strong>Total</strong>
+											</th>
+											<td>
+												<strong><span class="amount">Rp.  {{ keranjang.get_total_price|intcomma }}</span></strong>
+											<input type="hidden" value="{{keranjang.get_total_price}}" name="grantotal">
+                                            </td>
+										</tr>
+										
+										
+									</tbody>
+								</table>
+								{% comment %}  {% endcomment %}
+								
+								<br/>
+								<div class="form-group">
+									<label for="exampleFormControlSelect1">Tujuan</label>
+									<select class="form-control" id="select_box" name="tujuan">
+									<option value="0" selected>-- Pilih Tujuan --</option>
+									<option value="ditempat">Pesan Ambil di tempat</option>
+									<option value="dilokasi">Pesan Antar ke Lokasi</option>
+									</select>
+								</div>
+								<div class="form-group">	
+									<img src="{% static 'public/img/check1.png' %}" alt="Jika Pilih <b>dijemput</b> setelah melakukan Pembayaran silakan jemput ke toko Senin - Sabtu / 08.00 - 16.00(Kecuali Hari Libur)">
+                                    <span>Jika Pilih <b>dijemput</b> setelah melakukan Pembayaran silakan jemput ke toko Senin - Sabtu / 08.00 - 16.00(Kecuali Hari Libur)</span>
+								</div>	
+								<div class="form-group">	
+									<img src="{% static 'public/img/check2.png' %}" alt="ka Pilih <b>Antar</b> kami pihak toko akan menghubungi Pihak pelanggan terkait biaya Ongkir (Ongkos Kirim)">
+                                    <span>Jika Pilih <b>Antar</b> kami pihak toko akan menghubungi Pihak pelanggan terkait biaya Ongkir (Ongkos Kirim)</span>
+								</div>	
+								<div class="form-group">	
+									<img src="{% static 'public/img/check3.png' %}" alt="Kebijakan pengembalian akan di atur jika ada kesepatan sebelumnya">
+                                    <span>Kebijakan pengembalian akan di atur jika ada kesepatan sebelumnya</span>
+								</div>	
+								<div>
+								<hr>
+								</div>
+								<div id="ditempat" class="hilang">
+
+								</div>
+
+								<div id="dilokasi" class="hilang">
+									<div class="form-group">
+										<label for="exampleFormControlTextarea1">Alamat **) </label>
+										<textarea class="form-control" name="alamat_kirim" rows="3"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputEmail1">No Whatsapp **)</label>
+										<input type="text" class="form-control" name="wa_kirim" placeholder="08xxxxxxxxxx">
+									</div>
+								</div>
+								
+								{% comment %}  {% endcomment %}
+							</div>
+							<div class="checkout-left col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+
+
+								<div class="panel-group" id="accordion">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"  href="#collapseThree">
+													Pembayaran
+												</a>
+											</h4>
+										</div>
+										<div id="collapseThree" class="accordion-body collapse show" style="height: 350px;">
+											<div class="panel-body">
+												<table class="cart-summary table table-bordered">
+													<thead>
+														<tr>
+															
+                                                            <th class="width-80 text-center">Gambar</th>
+                                                            <th>Nama Menu</th>
+                                                            <th class="width-100 text-center">Harga</th>
+                                                            <th class="width-100 text-center">Jumlah</th>
+                                                            <th class="width-100 text-center">Total</th>
+														</tr>
+													</thead>
+													
+													<tbody>
+								{% for item in keranjang %}
+                                    {% with product=item.product  %}
+									<tr>
+										
+										<td>
+											<a href="">
+												<img width="80" class="img-responsive" src="{{product.gambar.url}}" alt="{{product.nama_produk}}">
+											</a>
+										</td>
+										<td>
+											<a href="" class="product-name">{{product.nama_produk}}</a>
+										</td>
+										<td class="text-center">
+											Rp {{ item.price|intcomma }}
+										</td>
+										<td align="center">
+                                        {{item.quantity}}
+                                        
+										</td>
+										<td class="text-center">
+											Rp. {{ item.total_price|intcomma }}
+										</td>
+									</tr>
+									{% endwith %}
+                                        {% empty %}
+                                            <tr><th colspan="6"> Belum ada Pemesanan</th></tr>
+                                        {% endfor %}
+													</tbody>
+												</table>
+
+												
+														
+                                   
+											</div>
+										</div>
+									</div>
+								</div>
+                                <input type="hidden" value="{{keranjang.get_total_price}}" name="grantotal">
+								<div class="pull-right">
+									<input type="submit" value="Simpan Order" name="simpan" class="btn btn-primary">
+								</div>
+							</div>
+							</form>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- Intro -->
+				
+<script>
+
+$('#select_box').change(function () {
+var select=$(this).find(':selected').val();        
+ $(".hilang").css("display", "none");
+ $('#' + select).css("display", "block");
+
+	    }).change();
+
+
+</script>			
+{% endblock content %}

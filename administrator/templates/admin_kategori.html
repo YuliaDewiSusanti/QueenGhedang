@@ -1,0 +1,71 @@
+{% extends "admin.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block content %}
+			
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <nav aria-label="breadcrumb" class="text-left">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="{% url 'profil_admin' %}"><h4>Halaman Beranda</h4></a></li>
+                  				<li class="breadcrumb-item active" aria-current="page"><h4>/{{judul}}</h4></li> 
+                        </nav>
+							<div class="product-category-page">
+								<div class="tab-content">
+									<!-- Products Grid -->
+									<div class="tab-pane active" id="products-grid">
+										<div class="products-block">
+											<div class="row mb-4">
+											<div class="card card-body">
+												<a class="btn btn-primary btn-sm" href="{% url 'formkategori_admin' %}">Tambah Kategori</a>
+												<br/><br/>
+											<table class="table table-bordered mt-3">
+											<thead>
+												<tr align="center">
+													<th>No</th>
+													<th>Nama Kategori</th>
+													<th>Aktif</th>
+													<th>Aksi</th>
+												</tr>
+											</thead>
+											<tbody>
+											{% for row in data %}
+											<tr align="center">
+												<td>{{ forloop.counter }}</td>
+												<td>{{row.nama}}</td>
+												<td>
+												{% if row.aktif == True  %}
+													Aktif
+												{% else %}
+												    Tidak Aktif
+												{% endif %}
+												</td>
+												<td><a href="{% url 'deletekategori_admin' row.id  %}" class="btn btn-primary btn-sm">Hapus</a><a href="{% url 'editkategori_admin' row.slug  %}" class="btn btn-danger btn-sm">Edit</a></td>
+											</tr>
+											{% empty %}
+											<tr>
+												
+												<td colspan="4" align="center">Data Kategori Kosong</td>
+											</tr>
+											{% endfor %}
+											</tbody>
+											</table>
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<script type="text/javascript" language="javascript">
+
+ </script>
+			
+			
+{% endblock content %}

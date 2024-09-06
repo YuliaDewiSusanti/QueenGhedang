@@ -1,0 +1,46 @@
+{% extends "admin.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block content %}
+	
+						<!-- Page Content -->
+						<div id="center-column" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <nav aria-label="breadcrumb" class="text-left">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="{% url 'profil_admin' %}"><h4>Halaman Beranda</h4></a></li>
+                  				<li class="breadcrumb-item active" aria-current="page"><h4>/{{judul}}</h4></li> 
+                        </nav>
+							<div class="product-category-page">
+								<div class="tab-content">
+									<!-- Products Grid -->
+									Nama Customer :<b> {{id_transaksi.custumer.nama}}</b><br/>
+									No Transaksi : <b>{{id_transaksi.no_transaksi}}</b>
+					<form action="#" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+					<br/>
+					{{form}}
+					
+					<br/>
+					<div class="checkout-btn">
+                        	<a href="{% url 'trackingpemesanandiantar_admin' %}" class="btn btn-primary pull-left" title="Kembali">
+								<i class="fa fa-angle-left ml-xs"> </i>
+								<span> Kembali</span>
+							</a>
+							<input type="submit" value="Simpan Tracking" name="simpan" class="btn btn-primary">
+					</div>
+					</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<script type="text/javascript" language="javascript">
+
+ </script>
+			
+			
+{% endblock content %}

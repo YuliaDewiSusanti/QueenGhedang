@@ -1,0 +1,47 @@
+{% load static %}
+		                        <ul class="menu">
+                                    <li><a href="{% url 'beranda' %}" title="Beranda">Beranda</a></li>
+										<li class="dropdown">
+											<a href="" title="Product">Produk</a>
+											<div class="dropdown-menu">
+												<ul>
+												{% for kt in kategori %}
+                                                       <li class="has-image">
+														<img src="{% static 'public/img/bg1.jpg' %}" alt="Product Category Image">
+														<a href="{% url 'kategori' kt.slug %}" title="{{kt.nama}}">{{kt.nama}}</a>
+													</li>
+                                                    {% empty %}
+                                                        <div class="alert alert-danger">Kategori Kosong</div>
+                                                    {% endfor %}
+													
+													
+												</ul>
+											</div>
+										</li>
+										<li>
+											<a href="{% url 'profil' %}">Profil</a>
+										</li>
+										<li>
+											<a href="{% url 'kontak' %}">Kontak</a>
+										</li>
+										
+										{% if user.is_authenticated %}
+											{% for group in user.groups.all  %}
+												{% if group.name == "administrator" %}
+													<li>
+														<a href="{% url 'beranda_admin' %}">Administrator</a>
+													</li>
+												{% endif %}
+												{% if group.name == "custumer" %}
+													<li>
+														<a href="{% url 'histori' %}">Histori</a>
+													</li>
+													<li>
+														<a href="{% url 'tracking' %}">Tracking</a>
+													</li>
+												
+												{% endif %}
+												
+											{% endfor %}
+										{% endif %}
+								</ul>
